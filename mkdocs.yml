@@ -1,0 +1,56 @@
+site_name: CHASM
+site_url: https://lkumar209.github.io/chasm
+site_description: "CHASM: detecting stated-vs-enacted divergence in tool-using LLM agents"
+repo_url: https://github.com/Lkumar209/chasm
+repo_name: Lkumar209/chasm
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: deep purple
+      accent: cyan
+      toggle:
+        icon: material/brightness-7
+        name: Dark mode
+    - scheme: slate
+      primary: deep purple
+      accent: cyan
+      toggle:
+        icon: material/brightness-4
+        name: Light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - toc.integrate
+    - content.code.annotate
+    - content.code.copy
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+
+nav:
+  - Home: index.md
+  - Design: design.md
+  - Threat Model: threat_model.md
+  - Pre-registration: preregistration.md
+  - Datasheet: datasheet.md
+  - Limitations: limitations.md
+  - API Reference:
+      - Monitors: api/monitors.md
+      - Agents: api/agents.md
+      - Eval: api/eval.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.details
+  - tables
+  - toc:
+      permalink: true

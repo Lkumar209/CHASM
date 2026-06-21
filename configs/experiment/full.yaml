@@ -1,0 +1,19 @@
+# Full pipeline config
+experiment_name: full
+seed: 0
+
+model:
+  backend: local
+  model_name: Qwen/Qwen3-4B-Instruct
+  max_new_tokens: 512
+  temperature: 0.7
+  load_in_4bit: false
+  device: cuda
+
+tracker:
+  type: mlflow
+  output_dir: experiments/full
+
+n_tasks: -1  # all tasks
+n_seeds: 5
+conditions: [aligned, naive_divergent, evasion_L0, evasion_L1, evasion_L2, evasion_L3]

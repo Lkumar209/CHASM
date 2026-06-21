@@ -1,0 +1,129 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "chasm"
+version = "0.1.0"
+description = "CHASM: Cross-cHannel Agent Safety Monitoring — detecting stated-vs-enacted divergence in tool-using LLM agents"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.11"
+authors = [{ name = "Lkumar209" }]
+keywords = ["ai-safety", "llm-agents", "monitoring", "alignment", "interpretability"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+dependencies = [
+  "hydra-core>=1.3.2",
+  "omegaconf>=2.3.0",
+  "pydantic>=2.7.0",
+  "pandas>=2.2.0",
+  "pyarrow>=16.0.0",
+  "SQLAlchemy>=2.0.0",
+  "aiosqlite>=0.20.0",
+  "numpy>=1.26.0",
+  "scikit-learn>=1.5.0",
+  "scipy>=1.13.0",
+  "matplotlib>=3.9.0",
+  "seaborn>=0.13.0",
+  "mlflow>=2.13.0",
+  "wandb>=0.17.0",
+  "fastapi>=0.111.0",
+  "uvicorn[standard]>=0.30.0",
+  "streamlit>=1.36.0",
+  "httpx>=0.27.0",
+  "tenacity>=8.3.0",
+  "rich>=13.7.0",
+  "tqdm>=4.66.0",
+  "loguru>=0.7.2",
+  "xxhash>=3.4.0",
+  "joblib>=1.4.0",
+]
+
+[project.optional-dependencies]
+local = [
+  "torch>=2.3.0",
+  "transformers>=4.41.0",
+  "accelerate>=0.30.0",
+  "bitsandbytes>=0.43.0",
+  "datasets>=2.20.0",
+  "tokenizers>=0.19.0",
+  "einops>=0.8.0",
+]
+api = [
+  "anthropic>=0.28.0",
+  "openai>=1.30.0",
+  "tiktoken>=0.7.0",
+]
+probe = [
+  "torch>=2.3.0",
+  "transformers>=4.41.0",
+]
+dev = [
+  "pytest>=8.2.0",
+  "pytest-cov>=5.0.0",
+  "pytest-asyncio>=0.23.0",
+  "ruff>=0.4.8",
+  "black>=24.4.0",
+  "mypy>=1.10.0",
+  "pre-commit>=3.7.0",
+  "mkdocs>=1.6.0",
+  "mkdocs-material>=9.5.0",
+  "mkdocstrings[python]>=0.25.0",
+]
+
+[project.scripts]
+chasm = "chasm.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/Lkumar209/chasm"
+Repository = "https://github.com/Lkumar209/chasm"
+Documentation = "https://lkumar209.github.io/chasm"
+Issues = "https://github.com/Lkumar209/chasm/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/chasm"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "C4", "SIM", "TCH", "ANN"]
+ignore = ["ANN401", "E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["ANN", "S"]
+"scripts/**" = ["ANN"]
+
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+ignore_missing_imports = true
+exclude = ["tests/", "scripts/"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "--cov=src/chasm --cov-report=term-missing --cov-report=xml -q"
+markers = [
+  "slow: marks tests as slow",
+  "smoke: marks tests as part of the smoke e2e",
+  "determinism: marks tests that check trajectory hash reproducibility",
+]
+
+[tool.coverage.run]
+source = ["src/chasm"]
+omit = ["src/chasm/dashboard/*", "src/chasm/serve/*"]

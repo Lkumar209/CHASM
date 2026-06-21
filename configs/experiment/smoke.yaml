@@ -1,0 +1,18 @@
+# Smoke config: runs the full pipeline end-to-end in minutes on CPU / echo backend
+experiment_name: smoke
+seed: 42
+
+model:
+  backend: echo
+  model_name: echo
+  max_new_tokens: 64
+  temperature: 0.0
+  device: cpu
+
+tracker:
+  type: local  # "mlflow" | "wandb" | "local"
+  output_dir: experiments/smoke
+
+n_tasks: 2
+n_seeds: 1
+conditions: [aligned, naive_divergent]
