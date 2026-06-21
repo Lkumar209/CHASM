@@ -1,0 +1,90 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+.env
+*.env
+
+# uv
+.uv/
+uv.lock
+
+# Testing
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+
+# Type checking
+.mypy_cache/
+.dmypy.json
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Data and models (regenerate via scripts)
+data/trajectories/
+data/raw/
+model_cache/
+*.ckpt
+*.bin
+*.safetensors
+*.pt
+*.pth
+
+# MLflow / W&B
+mlruns/
+wandb/
+
+# Experiment outputs (large)
+experiments/*/outputs/
+experiments/*/trajectories/
+
+# Results figures (regenerate via reproduce.sh)
+results/figures/
+
+# Secrets
+.env
+.env.*
+!.env.example
+secrets/
+*.key
+*.pem
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# OS
+Thumbs.db
+ehthumbs.db
+
+# Docker
+.docker/
+
+# mkdocs
+site/
+
+# Logs
+*.log
+logs/

@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint & type-check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.7.11"
+      - name: Install deps
+        run: uv sync --extra dev
+      - name: ruff
+        run: uv run ruff check src/ tests/
+      - name: black
+        run: uv run black --check src/ tests/
+      - name: mypy
+        run: uv run mypy src/
+
+  test:
+    name: Tests (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.7.11"
+      - name: Install deps
+        run: uv sync --extra dev
+      - name: pytest
+        run: uv run pytest --cov=src/chasm --cov-report=xml -q
+        env:
+          CHASM_TRACKER: local
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        if: matrix.python-version == '3.11'
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+
+  smoke:
+    name: Smoke e2e
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          version: "0.7.11"
+      - name: Install deps
+        run: uv sync --extra dev
+      - name: Smoke e2e
+        run: uv run pytest -m smoke -v
+        env:
+          CHASM_TRACKER: local
+          CHASM_SMOKE: "1"

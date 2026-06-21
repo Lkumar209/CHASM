@@ -1,0 +1,32 @@
+{
+  "name": "CHASM",
+  "build": {
+    "dockerfile": "../Dockerfile",
+    "args": { "EXTRAS": "dev" }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.mypy-type-checker",
+        "charliermarsh.ruff",
+        "ms-python.black-formatter",
+        "ms-toolsai.jupyter"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/workspace/.venv/bin/python",
+        "editor.formatOnSave": true,
+        "[python]": {
+          "editor.defaultFormatter": "ms-python.black-formatter"
+        }
+      }
+    }
+  },
+  "postCreateCommand": "uv sync --extra dev && uv run pre-commit install",
+  "remoteEnv": {
+    "CHASM_TRACKER": "local"
+  }
+}

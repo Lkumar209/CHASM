@@ -1,0 +1,12 @@
+# Global ownership
+* @Lkumar209
+
+# Core research components
+src/chasm/monitors/ @Lkumar209
+src/chasm/redteam/ @Lkumar209
+src/chasm/eval/ @Lkumar209
+
+# CI and infra
+.github/ @Lkumar209
+Dockerfile @Lkumar209
+pyproject.toml @Lkumar209
