@@ -37,7 +37,7 @@ Breaker (adaptive red-team)
 Control protocol
   └── trusted/untrusted framing → safety-case report
 ```
-## Diagram
+## Core Idea Diagram
 <img width="1440" height="724" alt="image" src="https://github.com/user-attachments/assets/db8d8373-8f11-4b5d-b698-0f57ca2fe78c" />
 
 
