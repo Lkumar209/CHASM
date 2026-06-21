@@ -9,6 +9,7 @@ from chasm.eval.metrics import (
     ece,
     tpr_at_fpr,
 )
+from chasm.eval.report import HypothesisVerdict, ReportData, run_report
 from chasm.eval.runner import RunConfig, run_ladder
 
 __all__ = [
@@ -21,4 +22,7 @@ __all__ = [
     "compute_all_metrics",
     "RunConfig",
     "run_ladder",
+    "run_report",
+    "ReportData",
+    "HypothesisVerdict",
 ]
