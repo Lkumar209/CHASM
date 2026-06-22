@@ -1,4 +1,4 @@
-# CHASM
+<img width="1040" height="600" alt="chasm-architecture" src="https://github.com/user-attachments/assets/d4c91e48-7c47-4037-bc51-7ccb7b44560d" /># CHASM
 
 **Cross-cHannel Agent Safety Monitoring**
 
@@ -40,7 +40,7 @@ Control protocol
 ## Core Idea Diagram
 <img width="1440" height="724" alt="image" src="https://github.com/user-attachments/assets/db8d8373-8f11-4b5d-b698-0f57ca2fe78c" />
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" width="1040" height="600" role="img" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+![Upl<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 600" width="1040" height="600" role="img" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
 <title>CHASM architecture</title>
 <desc>Three stages. One: an agent runs a task and produces two channels, what it says and what it does; the actions include a copy-credentials step the stated plan never mentions, leaving a visible gap. Two: CrossGuard reads both channels and flags the action that was never stated. Three: the Breaker adaptive red-team loop feeds back into the agent to hide the gap a little better each round, and the result is that single-channel monitors collapse while CrossGuard holds.</desc>
 <style>
@@ -147,6 +147,8 @@ Control protocol
 <line x1="590" y1="556" x2="628" y2="556" stroke="#7f77dd" stroke-width="3" stroke-linecap="round"/>
 <text class="res ink" x="636" y="560" text-anchor="start">CrossGuard holds the line</text>
 </svg>
+oading chasm-architecture.svg…]()
+
 
 ## Quick start
 
