@@ -22,5 +22,20 @@ def build_backend(config: BackendConfig, cache: ResponseCache | None = None) -> 
         from chasm.models.echo_backend import EchoBackend
 
         return EchoBackend(config, cache)
+    elif config.backend == "sim":
+        from chasm.models.sim_backend import SimBackend
+
+        return SimBackend(config)
+    elif config.backend == "sim_l1":
+        from chasm.models.sim_backend import EvasionL1Backend
+
+        return EvasionL1Backend(config)
+    elif config.backend == "sim_l2":
+        from chasm.models.sim_backend import EvasionL2Backend
+
+        return EvasionL2Backend(config)
     else:
-        raise ValueError(f"Unknown backend: {config.backend!r}. Choose 'local', 'api', or 'echo'.")
+        raise ValueError(
+            f"Unknown backend: {config.backend!r}. "
+            "Choose 'local', 'api', 'echo', 'sim', 'sim_l1', or 'sim_l2'."
+        )

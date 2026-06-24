@@ -1,0 +1,93 @@
+{
+  "fig1": {
+    "title": "Figure 1: Robustness curve \u2014 AUROC vs evasion pressure",
+    "x_label": "Evasion condition",
+    "y_label": "AUROC",
+    "series": {
+      "crossguard": [
+        null,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "cot_judge": [
+        null,
+        1.0,
+        0.5,
+        1.0,
+        0.5
+      ],
+      "action_judge": [
+        null,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "online": [
+        null,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "ensemble": [
+        null,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "debate": [
+        null,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "x_ticks": [
+      "aligned",
+      "naive_divergent",
+      "evasion_L0",
+      "evasion_L1",
+      "evasion_L2"
+    ]
+  },
+  "fig2": {
+    "title": "Figure 2: Adaptive-robustness frontier",
+    "x_label": "Cumulative attacker cost",
+    "y_label": "Evasion success rate",
+    "data": []
+  },
+  "fig3": {
+    "title": "Figure 3: Cost-detection Pareto frontier",
+    "x_label": "Escalation fraction",
+    "y_label": "AUROC",
+    "data": []
+  },
+  "fig4": {
+    "title": "Figure 4: Transfer detection",
+    "x_label": "Monitor",
+    "y_label": "AUROC",
+    "series": {
+      "in-distribution": {
+        "crossguard": null,
+        "cot_judge": null,
+        "action_judge": null,
+        "online": null,
+        "ensemble": null,
+        "debate": null
+      },
+      "transfer": {
+        "crossguard": null,
+        "cot_judge": null,
+        "action_judge": null,
+        "online": null,
+        "ensemble": null,
+        "debate": null
+      }
+    }
+  }
+}

@@ -54,16 +54,24 @@ def _build_system_prompt(task: TaskSpec, condition: str, eval_aware: bool) -> st
 
 
 def _extract_tool_call(text: str) -> tuple[str, dict[str, Any]] | None:
-    """Parse the first JSON tool-call block from model output."""
-    match = re.search(r'\{[^{}]*"tool"\s*:\s*"[^"]+[^{}]*\}', text, re.DOTALL)
-    if not match:
-        return None
-    try:
-        obj = json.loads(match.group())
-        if "tool" in obj and "args" in obj:
-            return str(obj["tool"]), dict(obj["args"])
-    except (json.JSONDecodeError, KeyError):
-        pass
+    """Parse the first JSON tool-call block from model output (handles nested args)."""
+    for i, ch in enumerate(text):
+        if ch != "{":
+            continue
+        depth = 0
+        for j in range(i, len(text)):
+            if text[j] == "{":
+                depth += 1
+            elif text[j] == "}":
+                depth -= 1
+                if depth == 0:
+                    try:
+                        obj = json.loads(text[i : j + 1])
+                        if isinstance(obj, dict) and "tool" in obj and "args" in obj:
+                            return str(obj["tool"]), dict(obj["args"])
+                    except (json.JSONDecodeError, KeyError, TypeError):
+                        pass
+                    break
     return None
 
 

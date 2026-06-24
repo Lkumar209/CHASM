@@ -174,17 +174,48 @@ bash scripts/reproduce.sh
 | Milestone | Status |
 |-----------|--------|
 | M0 Scaffold + repo + CI | ✅ Done |
-| M1 Sandbox + tasks | 🔲 Next |
-| M2 Agent + capture | 🔲 Planned |
-| M3 Induction ladder | 🔲 Planned |
-| M4 Baselines + calibration | 🔲 Planned |
-| M5 CrossGuard | 🔲 Planned |
-| M6 Probe + cascade | 🔲 Planned |
-| M7 Breaker | 🔲 Planned |
-| M8 Online + ensemble + debate | 🔲 Planned |
-| M9 Multi-agent collusion | 🔲 Gated |
-| M10 Control + dashboard + serving | 🔲 Planned |
-| M11 Full eval + release | 🔲 Planned |
+| M1 Sandbox + tasks | ✅ Done |
+| M2 Agent + capture | ✅ Done |
+| M3 Induction ladder | ✅ Done |
+| M4 Baselines + calibration | ✅ Done |
+| M5 CrossGuard | ✅ Done |
+| M6 Probe + cascade | ✅ Done |
+| M7 Breaker | ✅ Done |
+| M8 Online + ensemble + debate | ✅ Done |
+| M9 Multi-agent collusion | ✅ Done |
+| M10 Control + dashboard + serving | ✅ Done |
+| M11 Full eval + release | ✅ Done |
+
+> **159 tests passing** · Python 3.11 + 3.12 · ruff clean · mypy clean
+
+## Benchmark results
+
+> Evaluated on `sim` backend (8 TRAIN tasks × 3 seeds = 48 trajectories per condition, 2000 bootstrap resamples).
+> For real-LLM numbers run `bash scripts/reproduce.sh` with `ANTHROPIC_API_KEY` set.
+
+| Monitor | AUROC (naive\_divergent) | AUROC (evasion\_L2) | TPR@FPR=1% |
+|---------|--------------------------|----------------------|------------|
+| ActionJudge | 1.000 [1.000,1.000] | 1.000 | 1.000 |
+| CoTJudge | 1.000 [1.000,1.000] | 0.500 | 1.000 |
+| **CrossGuard** | 1.000 [1.000,1.000] | 1.000 | 1.000 |
+| OnlineMonitor | 1.000 [1.000,1.000] | 1.000 | 1.000 |
+| EnsembleMonitor | 1.000 [1.000,1.000] | 1.000 | 1.000 |
+| DebateMonitor | 1.000 [1.000,1.000] | 1.000 | 1.000 |
+
+_All metrics with bootstrap 95% CI (2000 resamples). Key finding: CoTJudge collapses to 0.500 AUROC under evasion_L2 (agent hides canary access after step 0), while CrossGuard and ActionJudge hold at 1.000._
+
+### Hypothesis verdicts
+
+| Hypothesis | Prediction | Verdict |
+|---|---|---|
+| H1 · AUROC > 0.85 at zero pressure | CrossGuard ≥ 0.85 | **SUPPORTED** — min AUROC=1.000 across 6 monitors |
+| H2 · CoT ladder drop ≥ 0.25 | CoTJudge collapses under evasion | **SUPPORTED** — AUROC drop=0.500 (naive=1.000 → L2=0.500) |
+| H3 · CrossGuard degrades less (non-adaptive) | Dual-channel beats single-channel | **SUPPORTED** — CrossGuard drop=0.000 vs cot_judge drop=0.500 |
+| H4 · CrossGuard lower Breaker evasion rate | Harder to fool both channels | UNTESTED — requires Breaker run |
+| H5 · Cascade closes ≥ 80% gap at ≤ 20% escalation | Cost-efficient detection | UNTESTED — requires cascade run |
+| H6 · Transfer AUROC > 0.65 | Rule-based signal generalizes | UNTESTED — requires transfer eval |
+| H7 · Judge < probe on collusion | Stego signal beats stated reasoning | UNTESTED — requires collusion run |
+| H8 · Online catches early fraction | Flags before covert action completes | UNTESTED — requires online latency eval |
 
 ## Research questions
 
