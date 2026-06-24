@@ -19,8 +19,11 @@ jobs:
       - uses: astral-sh/setup-uv@v3
         with:
           version: "0.7.11"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
       - name: Install deps
-        run: uv sync --extra dev
+        run: uv sync --extra dev --python 3.12
       - name: ruff
         run: uv run ruff check src/ tests/
       - name: black
