@@ -20,11 +20,10 @@ from typing import Any
 def _require_streamlit() -> Any:
     try:
         import streamlit as st
+
         return st
     except ImportError as e:
-        raise ImportError(
-            "streamlit is required: pip install chasm[probe]"
-        ) from e
+        raise ImportError("streamlit is required: pip install chasm[probe]") from e
 
 
 def main() -> None:
@@ -40,9 +39,7 @@ def main() -> None:
         value="experiments/",
         help="Directory containing metrics.json and parquet trajectory store",
     )
-    uploaded = st.sidebar.file_uploader(
-        "Or upload a trajectory JSON", type=["json"]
-    )
+    uploaded = st.sidebar.file_uploader("Or upload a trajectory JSON", type=["json"])
 
     # ── Main panel ───────────────────────────────────────────────────────────
     col_left, col_right = st.columns([1, 2])

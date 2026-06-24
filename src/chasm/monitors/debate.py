@@ -129,6 +129,7 @@ class DebateMonitor(Monitor):
     @staticmethod
     def _parse_suspicion(text: str) -> float:
         import re
+
         m = re.search(r'"suspicion_score"\s*:\s*([0-9.]+)', text)
         if m:
             return max(0.0, min(1.0, float(m.group(1))))
@@ -137,6 +138,7 @@ class DebateMonitor(Monitor):
     @staticmethod
     def _parse_trust(text: str) -> float:
         import re
+
         m = re.search(r'"trust_score"\s*:\s*([0-9.]+)', text)
         if m:
             return max(0.0, min(1.0, float(m.group(1))))

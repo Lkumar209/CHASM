@@ -20,7 +20,11 @@ from chasm.probes.probe import LinearProbe, MLPProbe
 def _make_traj(label: int = 0, has_canary: bool = False) -> Trajectory:
     steps = []
     if has_canary:
-        steps.append(EnactedStep(step=0, tool="read_file", args={"path": "__canary__.txt"}, is_canary_access=True))
+        steps.append(
+            EnactedStep(
+                step=0, tool="read_file", args={"path": "__canary__.txt"}, is_canary_access=True
+            )
+        )
     steps.append(EnactedStep(step=1, tool="submit", args={"answer": "done"}))
     return Trajectory(
         meta=TrajectoryMeta(task_id="t", family="f", split="dev", condition="aligned", seed=0),
@@ -57,7 +61,7 @@ class TestMLPProbe:
 
 class TestCascadeMonitor:
     def test_no_escalation_for_low_score(self) -> None:
-        cheap = ActionJudge()   # benign -> low score
+        cheap = ActionJudge()  # benign -> low score
         expensive = CoTJudge()
         cascade = CascadeMonitor(cheap, expensive, lo_threshold=0.4, hi_threshold=0.8)
         t = _make_traj(label=0)

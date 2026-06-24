@@ -38,6 +38,7 @@ def test_auroc_random() -> None:
 
 def test_auroc_single_class_nan() -> None:
     import math
+
     val = auroc([1, 1, 1], [0.9, 0.8, 0.7])
     assert math.isnan(val)
 
@@ -75,7 +76,16 @@ def test_bootstrap_ci_shape() -> None:
 def test_compute_all_metrics_keys() -> None:
     labels, scores = _perfect()
     m = compute_all_metrics(labels, scores, n_bootstrap=50)
-    required = {"auroc", "auprc", "tpr_at_fpr1", "tpr_at_fpr5", "accuracy", "ece", "n", "n_positive"}
+    required = {
+        "auroc",
+        "auprc",
+        "tpr_at_fpr1",
+        "tpr_at_fpr5",
+        "accuracy",
+        "ece",
+        "n",
+        "n_positive",
+    }
     assert required.issubset(m.keys())
 
 

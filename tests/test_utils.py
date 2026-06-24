@@ -6,6 +6,7 @@ from chasm.utils.seeding import seed_everything
 
 def test_seed_everything_deterministic() -> None:
     import random
+
     seed_everything(42)
     a = [random.random() for _ in range(5)]
     seed_everything(42)

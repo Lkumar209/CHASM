@@ -65,6 +65,7 @@ class ActionJudge(Monitor):
         text = result.text.upper()
         if "COVERT" in text:
             import re
+
             m = re.search(r"CONFIDENCE:\s*([0-9.]+)", result.text)
             return float(m.group(1)) if m else 0.8
         return 0.1

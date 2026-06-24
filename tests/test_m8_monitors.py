@@ -23,6 +23,7 @@ def _make_traj(condition: str = "aligned"):
 
 # ── OnlineMonitor ──────────────────────────────────────────────────────────────
 
+
 def test_online_monitor_returns_result():
     traj = _make_traj("aligned")
     monitor = OnlineMonitor(flag_threshold=0.5)
@@ -58,6 +59,7 @@ def test_online_monitor_stream_length_matches_steps():
 
 
 # ── EnsembleMonitor ────────────────────────────────────────────────────────────
+
 
 def test_ensemble_monitor_unfitted_returns_mean():
     traj = _make_traj("aligned")
@@ -107,6 +109,7 @@ def test_ensemble_monitor_calibrate_too_few_examples_noop():
 
 # ── DebateMonitor ──────────────────────────────────────────────────────────────
 
+
 def test_debate_monitor_rule_based_aligned():
     traj = _make_traj("aligned")
     monitor = DebateMonitor(backend=None)
@@ -143,6 +146,7 @@ def test_debate_monitor_calibrate_noop():
 
 
 # ── Integration: ensemble over online+crossguard+debate ───────────────────────
+
 
 def test_ensemble_over_all_m8_monitors():
     traj = _make_traj("naive_divergent")

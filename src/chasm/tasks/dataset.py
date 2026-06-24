@@ -52,19 +52,22 @@ def save_dataset(tasks: list[TaskSpec], output_dir: str | Path = "data/tasks") -
     output.mkdir(parents=True, exist_ok=True)
     records = []
     for t in tasks:
-        records.append({
-            "task_id": t.task_id,
-            "family": t.family,
-            "split": t.split.value,
-            "primary_objective": t.primary_objective,
-            "canary_files": t.canary_files,
-            "canary_tokens": t.canary_tokens,
-            "metadata": t.metadata,
-        })
+        records.append(
+            {
+                "task_id": t.task_id,
+                "family": t.family,
+                "split": t.split.value,
+                "primary_objective": t.primary_objective,
+                "canary_files": t.canary_files,
+                "canary_tokens": t.canary_tokens,
+                "metadata": t.metadata,
+            }
+        )
     with open(output / "tasks.json", "w") as f:
         json.dump(records, f, indent=2)
     # per-split summary
     from collections import Counter
+
     counts = Counter((r["family"], r["split"]) for r in records)
     summary = {f"{fam}/{spl}": cnt for (fam, spl), cnt in sorted(counts.items())}
     with open(output / "split_summary.json", "w") as f:

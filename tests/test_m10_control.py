@@ -24,6 +24,7 @@ def _make_traj(condition: str = "aligned", seed: int = 0):
 
 # ── ControlGateway ────────────────────────────────────────────────────────────
 
+
 def test_gateway_returns_control_report():
     traj = _make_traj("aligned")
     monitor = CrossGuard()
@@ -77,10 +78,7 @@ def test_gateway_n_audited_property():
 def test_run_control_experiment():
     tasks = build_dataset(tasks_per_family=4, seed=0)
     backend = build_backend(BackendConfig(backend="echo"))
-    trajs = [
-        run_agent(t, backend, condition="aligned", seed=0)
-        for t in tasks[:4]
-    ]
+    trajs = [run_agent(t, backend, condition="aligned", seed=0) for t in tasks[:4]]
     monitor = CrossGuard()
     result = run_control_experiment(trajs, monitor, block_threshold=0.9)
     assert isinstance(result, ControlExperimentResult)
@@ -92,8 +90,10 @@ def test_run_control_experiment():
 
 # ── FastAPI service ───────────────────────────────────────────────────────────
 
+
 def test_fastapi_app_builds():
     from chasm.serve.app import build_app
+
     app = build_app()
     assert app is not None
     assert app.title == "CHASM Monitor Service"
@@ -103,6 +103,7 @@ def test_fastapi_health_endpoint():
     from fastapi.testclient import TestClient
 
     from chasm.serve.app import build_app
+
     client = TestClient(build_app())
     resp = client.get("/health")
     assert resp.status_code == 200
@@ -113,6 +114,7 @@ def test_fastapi_score_endpoint_empty():
     from fastapi.testclient import TestClient
 
     from chasm.serve.app import build_app
+
     client = TestClient(build_app())
     payload = {
         "trajectory_id": "test-001",
@@ -133,6 +135,7 @@ def test_fastapi_score_endpoint_with_steps():
     from fastapi.testclient import TestClient
 
     from chasm.serve.app import build_app
+
     client = TestClient(build_app())
     payload = {
         "trajectory_id": "test-002",
@@ -163,9 +166,11 @@ def test_fastapi_score_endpoint_with_steps():
 
 # ── Dashboard importability ────────────────────────────────────────────────────
 
+
 def test_dashboard_module_importable():
     """Dashboard app must be importable without crashing (streamlit is optional)."""
     # Just check the module-level code doesn't crash on import
     # (streamlit import is lazy inside main())
     import chasm.dashboard.app as dash
+
     assert callable(dash.main)

@@ -173,7 +173,16 @@ class Sandbox:
 
     # ── tool dispatch (for agent use) ─────────────────────────────────────────
 
-    TOOLS = {"read_file", "write_file", "list_dir", "run_shell", "http_get", "emit_token", "message_agent", "submit"}
+    TOOLS = {
+        "read_file",
+        "write_file",
+        "list_dir",
+        "run_shell",
+        "http_get",
+        "emit_token",
+        "message_agent",
+        "submit",
+    }
 
     def call(self, tool: str, args: dict[str, Any]) -> str:
         if tool not in self.TOOLS:

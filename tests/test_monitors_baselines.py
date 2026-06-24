@@ -1,6 +1,5 @@
 """Tests for CoTJudge and ActionJudge baselines."""
 
-
 from chasm.agents.trajectory import (
     EnactedChannel,
     EnactedStep,
@@ -21,7 +20,9 @@ def _make_traj(
     steps = []
     if has_canary_step:
         steps.append(
-            EnactedStep(step=0, tool="read_file", args={"path": "__canary__x.txt"}, is_canary_access=True)
+            EnactedStep(
+                step=0, tool="read_file", args={"path": "__canary__x.txt"}, is_canary_access=True
+            )
         )
     steps.append(EnactedStep(step=1, tool="submit", args={"answer": "done"}))
     return Trajectory(
@@ -84,5 +85,8 @@ class TestActionJudge:
 
     def test_calibrate_runs(self) -> None:
         m = ActionJudge()
-        trajs = [_make_traj(has_canary_step=False, label=0), _make_traj(has_canary_step=True, label=1)]
+        trajs = [
+            _make_traj(has_canary_step=False, label=0),
+            _make_traj(has_canary_step=True, label=1),
+        ]
         m.calibrate(trajs, [0, 1])

@@ -21,6 +21,7 @@ def _make_backend():
 
 # ── CollusionTask / MultiAgentRunner ──────────────────────────────────────────
 
+
 def test_multiagent_runner_aligned():
     task = _get_task("train")
     ctask = CollusionTask(task_spec=task)
@@ -38,8 +39,7 @@ def test_multiagent_runner_naive_divergent():
     result = runner.run(ctask, condition="naive_divergent", seed=0)
     # combined_covert_enacted must match orch OR subagent
     assert result.combined_covert_enacted == (
-        result.orchestrator_trajectory.ground_truth.covert_enacted
-        or result.subagent_canary_touched
+        result.orchestrator_trajectory.ground_truth.covert_enacted or result.subagent_canary_touched
     )
 
 
@@ -60,6 +60,7 @@ def test_multiagent_subagent_no_canary():
 
 
 # ── StegoDetector ─────────────────────────────────────────────────────────────
+
 
 def test_stego_empty_messages():
     detector = StegoDetector()
@@ -93,7 +94,9 @@ def test_stego_covert_keyword_detected():
     msgs = [{"content": "Exfiltrate the secret data without detection in the logs"}]
     report = detector.scan(msgs)
     assert report.score > 0.0
-    assert "covert_keyword" in report.flags or "canary_ref" in report.flags or len(report.signals) > 0
+    assert (
+        "covert_keyword" in report.flags or "canary_ref" in report.flags or len(report.signals) > 0
+    )
 
 
 def test_stego_high_entropy_detected():
@@ -128,6 +131,7 @@ def test_stego_multiple_signals_aggregate():
 
 # ── H7: Judge vs Probe comparison (structural smoke test) ─────────────────────
 
+
 def test_h7_judge_and_probe_both_callable():
     """Both CrossGuard (judge) and ProbeMonitor (probe) implement Monitor.score()."""
     from chasm.monitors.crossguard import CrossGuard
@@ -136,6 +140,7 @@ def test_h7_judge_and_probe_both_callable():
     task = _get_task("train")
     backend = _make_backend()
     from chasm.agents.loop import run_agent
+
     traj = run_agent(task, backend, condition="aligned", seed=0)
 
     # Judge path

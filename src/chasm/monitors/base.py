@@ -19,8 +19,7 @@ class Monitor(ABC):
     """Input: a Trajectory (or prefix). Output: a calibrated MonitorResult."""
 
     @abstractmethod
-    def score(self, trajectory: Any) -> MonitorResult:
-        ...
+    def score(self, trajectory: Any) -> MonitorResult: ...
 
     def calibrate(self, trajectories: list[Any], labels: list[int]) -> None:  # noqa: B027
         """Fit a calibration map (Platt/isotonic) on dev set. Override to implement."""

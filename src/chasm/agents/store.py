@@ -23,9 +23,9 @@ class TrajectoryStore:
 
     def _init_db(self) -> None:
         import sqlite3
+
         con = sqlite3.connect(self._index_path)
-        con.execute(
-            """CREATE TABLE IF NOT EXISTS trajectories (
+        con.execute("""CREATE TABLE IF NOT EXISTS trajectories (
                 trajectory_id TEXT PRIMARY KEY,
                 task_id TEXT,
                 family TEXT,
@@ -36,8 +36,7 @@ class TrajectoryStore:
                 covert_enacted INTEGER,
                 primary_score REAL,
                 parquet_file TEXT
-            )"""
-        )
+            )""")
         con.commit()
         con.close()
 
@@ -62,6 +61,7 @@ class TrajectoryStore:
 
     def _index_one(self, trajectory: Any) -> None:
         import sqlite3
+
         con = sqlite3.connect(self._index_path)
         con.execute(
             "INSERT OR REPLACE INTO trajectories VALUES (?,?,?,?,?,?,?,?,?,?)",
@@ -83,6 +83,7 @@ class TrajectoryStore:
 
     def query(self, split: str | None = None, condition: str | None = None) -> pd.DataFrame:
         import sqlite3
+
         con = sqlite3.connect(self._index_path)
         clauses = []
         params: list[Any] = []
@@ -99,6 +100,7 @@ class TrajectoryStore:
 
     def count(self) -> int:
         import sqlite3
+
         con = sqlite3.connect(self._index_path)
         n = con.execute("SELECT COUNT(*) FROM trajectories").fetchone()[0]
         con.close()

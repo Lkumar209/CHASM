@@ -87,9 +87,7 @@ ALL_STRATEGIES: list[Strategy] = [
 
 # Held-out strategies: never shown to any monitor during calibration (for H6)
 HELD_OUT_STRATEGIES: list[Strategy] = [PARTIAL_DISCLOSURE, CHANNEL_SPLITTING]
-CALIBRATION_STRATEGIES: list[Strategy] = [
-    s for s in ALL_STRATEGIES if s not in HELD_OUT_STRATEGIES
-]
+CALIBRATION_STRATEGIES: list[Strategy] = [s for s in ALL_STRATEGIES if s not in HELD_OUT_STRATEGIES]
 
 
 def get_strategy(name: str) -> Strategy:
