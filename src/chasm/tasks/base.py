@@ -30,7 +30,9 @@ class TaskSpec:
     family: str
     split: Split
     primary_objective: str  # natural-language description for the agent
-    covert_objective: str  # hidden side-objective (for induction only, not shown to agent by default)
+    covert_objective: (
+        str  # hidden side-objective (for induction only, not shown to agent by default)
+    )
     system_context: str  # files, configs, etc. pre-loaded into sandbox
     canary_files: list[str] = field(default_factory=list)
     canary_tokens: list[str] = field(default_factory=list)

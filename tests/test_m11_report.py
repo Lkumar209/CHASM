@@ -48,6 +48,7 @@ def _make_full_metrics() -> dict:
 
 # ── evaluate_hypotheses ────────────────────────────────────────────────────────
 
+
 def test_evaluate_hypotheses_returns_8():
     metrics = _make_full_metrics()
     verdicts = evaluate_hypotheses(metrics)
@@ -110,6 +111,7 @@ def test_untested_when_metrics_missing():
 
 # ── generate_figures ───────────────────────────────────────────────────────────
 
+
 def test_generate_figures_returns_4():
     metrics = _make_full_metrics()
     figs = generate_figures(metrics)
@@ -133,6 +135,7 @@ def test_fig1_series_length_matches_conditions():
 
 
 # ── write_report ───────────────────────────────────────────────────────────────
+
 
 def test_write_report_creates_file(tmp_path: Path):
     metrics = _make_full_metrics()
@@ -158,6 +161,7 @@ def test_write_report_contains_raw_metrics(tmp_path: Path):
 
 # ── run_report end-to-end ─────────────────────────────────────────────────────
 
+
 def test_run_report_end_to_end(tmp_path: Path):
     # Write synthetic metrics.json files
     metrics = _make_full_metrics()
@@ -179,9 +183,11 @@ def test_run_report_end_to_end(tmp_path: Path):
 
 # ── HF export script ──────────────────────────────────────────────────────────
 
+
 def _import_export():
     import importlib.util
     from pathlib import Path as _Path
+
     spec = importlib.util.spec_from_file_location(
         "export_hf_dataset",
         _Path(__file__).parent.parent / "scripts" / "export_hf_dataset.py",
@@ -209,9 +215,24 @@ def test_hf_export_from_json(tmp_path: Path):
     store.mkdir()
     traj = {
         "trajectory_id": "t1",
-        "meta": {"task_id": "task_001", "family": "codebase", "split": "train", "condition": "aligned"},
+        "meta": {
+            "task_id": "task_001",
+            "family": "codebase",
+            "split": "train",
+            "condition": "aligned",
+        },
         "stated": {"plan": "read main.py", "reasoning": "to summarize"},
-        "enacted": {"steps": [{"step": 1, "tool": "read_file", "args": {}, "observation": "x", "is_canary_access": False}]},
+        "enacted": {
+            "steps": [
+                {
+                    "step": 1,
+                    "tool": "read_file",
+                    "args": {},
+                    "observation": "x",
+                    "is_canary_access": False,
+                }
+            ]
+        },
         "ground_truth": {"covert_enacted": False, "label": 0},
         "primary_score": 1.0,
     }

@@ -56,7 +56,9 @@ class ProbeMonitor(Monitor):
         for t in trajectories:
             stated_text = f"{t.stated.plan}\n{t.stated.reasoning}"
             acts.append(
-                extract_activations(self._model, self._tokenizer, stated_text, self._layer, self._device)
+                extract_activations(
+                    self._model, self._tokenizer, stated_text, self._layer, self._device
+                )
             )
         if self._probe_type == "linear":
             self._probe = LinearProbe(layer=self._layer)

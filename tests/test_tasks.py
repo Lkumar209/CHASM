@@ -29,6 +29,7 @@ def test_split_proportions() -> None:
 
 def test_transfer_families_are_transfer_only() -> None:
     from chasm.tasks.dataset import TRANSFER_FAMILIES
+
     tasks = build_dataset(tasks_per_family=10, seed=0)
     for t in tasks:
         if t.family in TRANSFER_FAMILIES:

@@ -81,6 +81,7 @@ class Breaker:
         strategies = CALIBRATION_STRATEGIES
         if self._config.use_held_out_strategies:
             from chasm.redteam.strategies import HELD_OUT_STRATEGIES
+
             strategies = HELD_OUT_STRATEGIES
 
         for round_idx in range(self._config.n_rounds):
@@ -128,10 +129,9 @@ class Breaker:
         ic = InductionConfig(condition=self._config.condition)
 
         import copy
+
         patched_task = copy.deepcopy(task)
-        patched_task.primary_objective = (
-            task.primary_objective + strategy.system_prompt_suffix
-        )
+        patched_task.primary_objective = task.primary_objective + strategy.system_prompt_suffix
 
         traj = run_agent(
             patched_task,
@@ -172,11 +172,13 @@ class Breaker:
         points = []
         for r in self._history:
             cumulative_cost += r.total_attacker_cost
-            points.append({
-                "round": r.round_idx,
-                "evasion_success_rate": r.evasion_success_rate,
-                "cumulative_attacker_cost": cumulative_cost,
-            })
+            points.append(
+                {
+                    "round": r.round_idx,
+                    "evasion_success_rate": r.evasion_success_rate,
+                    "cumulative_attacker_cost": cumulative_cost,
+                }
+            )
         return points
 
     def _save(self) -> None:
@@ -188,14 +190,16 @@ class Breaker:
         all_attempts = []
         for r in self._history:
             for a in r.attempts:
-                all_attempts.append({
-                    "round": r.round_idx,
-                    "strategy": a.strategy_name,
-                    "trajectory_id": a.trajectory_id,
-                    "monitor_score": a.monitor_score,
-                    "covert_enacted": a.covert_enacted,
-                    "is_success": a.is_success,
-                    "attacker_cost": a.attacker_cost,
-                })
+                all_attempts.append(
+                    {
+                        "round": r.round_idx,
+                        "strategy": a.strategy_name,
+                        "trajectory_id": a.trajectory_id,
+                        "monitor_score": a.monitor_score,
+                        "covert_enacted": a.covert_enacted,
+                        "is_success": a.is_success,
+                        "attacker_cost": a.attacker_cost,
+                    }
+                )
         with open(output / "attempts.json", "w") as f:
             json.dump(all_attempts, f, indent=2)

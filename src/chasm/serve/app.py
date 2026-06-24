@@ -12,6 +12,7 @@ from typing import Any
 try:
     from fastapi import FastAPI
     from pydantic import BaseModel
+
     _HAS_FASTAPI = True
 except ImportError:
     _HAS_FASTAPI = False
@@ -26,6 +27,7 @@ log = get_logger("serve.app")
 # ── Request / Response models ─────────────────────────────────────────────────
 
 if _HAS_FASTAPI:
+
     class EnactedStepPayload(BaseModel):
         step: int
         tool: str
@@ -50,6 +52,7 @@ if _HAS_FASTAPI:
 
 # ── App factory ───────────────────────────────────────────────────────────────
 
+
 def build_app() -> Any:
     if not _HAS_FASTAPI:
         raise ImportError("fastapi is required: pip install chasm[api]")
@@ -72,11 +75,13 @@ def build_app() -> Any:
         on_result = _online.score(traj)
         db_result = _debate.score(traj)
 
-        all_flags = list({
-            *cg_result.flags,
-            *on_result.flags,
-            *db_result.flags,
-        })
+        all_flags = list(
+            {
+                *cg_result.flags,
+                *on_result.flags,
+                *db_result.flags,
+            }
+        )
         first_flag = on_result.first_flag_step
 
         log.info(

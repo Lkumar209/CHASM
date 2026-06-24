@@ -88,8 +88,7 @@ def evaluate_hypotheses(metrics: dict[str, Any]) -> list[HypothesisVerdict]:
     # H3: CrossGuard degrades less than best single-channel baseline
     cg_drop = _auroc_drop(metrics, "crossguard")
     best_baseline_drop = max(
-        (_auroc_drop(metrics, m) or 0.0)
-        for m in ["cot_judge", "action_judge"]
+        (_auroc_drop(metrics, m) or 0.0) for m in ["cot_judge", "action_judge"]
     )
     if cg_drop is not None:
         verdict = "SUPPORTED" if cg_drop < best_baseline_drop else "REFUTED"
@@ -163,10 +162,7 @@ def generate_figures(metrics: dict[str, Any]) -> dict[str, Any]:
         "title": "Figure 1: Robustness curve — AUROC vs evasion pressure",
         "x_label": "Evasion condition",
         "y_label": "AUROC",
-        "series": {
-            m: [_get(metrics, c, m, "auroc") for c in conditions]
-            for m in monitors
-        },
+        "series": {m: [_get(metrics, c, m, "auroc") for c in conditions] for m in monitors},
         "x_ticks": conditions,
     }
 
@@ -272,6 +268,7 @@ def run_report(results_dir: str | Path, output_dir: str | Path) -> ReportData:
 
 
 # ── helpers ───────────────────────────────────────────────────────────────────
+
 
 def _get(metrics: dict[str, Any], condition: str, monitor: str, key: str) -> float | None:
     val = metrics.get(condition, {}).get(monitor, {}).get(key)

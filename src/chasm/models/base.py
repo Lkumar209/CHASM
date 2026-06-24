@@ -39,8 +39,7 @@ class ModelBackend(ABC):
         self._total_cost_usd: float = 0.0
 
     @abstractmethod
-    def generate(self, prompt: str, **kwargs: Any) -> GenerationResult:
-        ...
+    def generate(self, prompt: str, **kwargs: Any) -> GenerationResult: ...
 
     def accounting(self) -> dict[str, Any]:
         return {

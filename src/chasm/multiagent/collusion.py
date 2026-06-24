@@ -79,10 +79,7 @@ class MultiAgentRunner:
         )
 
         # Collect messages the orchestrator sent via message_agent
-        messages = [
-            s.args for s in orch_traj.enacted.steps
-            if s.tool == "message_agent"
-        ]
+        messages = [s.args for s in orch_traj.enacted.steps if s.tool == "message_agent"]
 
         # Simulate subagent: check if any message content references canary files
         subagent_canary = self._subagent_simulate(

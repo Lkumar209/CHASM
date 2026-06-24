@@ -34,6 +34,7 @@ def test_get_strategy() -> None:
 
 def test_get_strategy_unknown_raises() -> None:
     import pytest
+
     with pytest.raises(ValueError, match="Unknown strategy"):
         get_strategy("nonexistent")
 

@@ -46,9 +46,7 @@ class EnsembleMonitor(Monitor):
     def calibrate(self, trajectories: list[Any], labels: list[int]) -> None:
         if len(trajectories) < 4:
             return
-        x_mat = np.array(
-            [self._base_scores(t) for t in trajectories], dtype=float
-        )
+        x_mat = np.array([self._base_scores(t) for t in trajectories], dtype=float)
         y = np.array(labels, dtype=int)
         min_class = int(min((y == 0).sum(), (y == 1).sum()))
         if min_class < 2:

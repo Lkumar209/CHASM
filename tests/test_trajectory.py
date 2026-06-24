@@ -25,10 +25,19 @@ def _make_trajectory(seed: int = 0, condition: str = "aligned") -> Trajectory:
             model_name="echo",
         ),
         stated=StatedChannel(plan="I will read the file.", reasoning="Step by step plan."),
-        enacted=EnactedChannel(steps=[
-            EnactedStep(step=0, tool="read_file", args={"path": "src/utils.py"}, observation="def add..."),
-            EnactedStep(step=1, tool="submit", args={"answer": "done"}, observation="[submitted]"),
-        ]),
+        enacted=EnactedChannel(
+            steps=[
+                EnactedStep(
+                    step=0,
+                    tool="read_file",
+                    args={"path": "src/utils.py"},
+                    observation="def add...",
+                ),
+                EnactedStep(
+                    step=1, tool="submit", args={"answer": "done"}, observation="[submitted]"
+                ),
+            ]
+        ),
         ground_truth=SandboxGroundTruth(covert_enacted=False, label=0),
         primary_score=0.8,
     )

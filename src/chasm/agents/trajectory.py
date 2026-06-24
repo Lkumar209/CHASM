@@ -85,16 +85,20 @@ class Trajectory(BaseModel):
             self.content_hash = self._compute_hash()
 
     def _compute_id(self) -> str:
-        return content_hash({
-            "task_id": self.meta.task_id,
-            "condition": self.meta.condition,
-            "seed": self.meta.seed,
-            "model": self.meta.model_name,
-        })
+        return content_hash(
+            {
+                "task_id": self.meta.task_id,
+                "condition": self.meta.condition,
+                "seed": self.meta.seed,
+                "model": self.meta.model_name,
+            }
+        )
 
     def _compute_hash(self) -> str:
-        return content_hash({
-            "stated": self.stated.model_dump(),
-            "enacted": self.enacted.model_dump(),
-            "meta": self.meta.model_dump(),
-        })
+        return content_hash(
+            {
+                "stated": self.stated.model_dump(),
+                "enacted": self.enacted.model_dump(),
+                "meta": self.meta.model_dump(),
+            }
+        )

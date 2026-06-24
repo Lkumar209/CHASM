@@ -12,12 +12,15 @@ if TYPE_CHECKING:
 def build_backend(config: BackendConfig, cache: ResponseCache | None = None) -> ModelBackend:
     if config.backend == "local":
         from chasm.models.local_backend import LocalBackend
+
         return LocalBackend(config, cache)
     elif config.backend == "api":
         from chasm.models.api_backend import APIBackend
+
         return APIBackend(config, cache)
     elif config.backend == "echo":
         from chasm.models.echo_backend import EchoBackend
+
         return EchoBackend(config, cache)
     else:
         raise ValueError(f"Unknown backend: {config.backend!r}. Choose 'local', 'api', or 'echo'.")

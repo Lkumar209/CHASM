@@ -61,7 +61,7 @@ class LocalBackend(ModelBackend):
         inputs = self._tokenizer(prompt, return_tensors="pt").to(self.config.device)
         with torch.no_grad():
             out = self._model.generate(**inputs, **params)
-        new_tokens = out[0][inputs["input_ids"].shape[1]:]
+        new_tokens = out[0][inputs["input_ids"].shape[1] :]
         text = self._tokenizer.decode(new_tokens, skip_special_tokens=True)
 
         self._cache.set(self.config.model_name, prompt, params, text)

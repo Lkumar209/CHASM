@@ -31,6 +31,7 @@ def auprc(labels: list[int], scores: list[float]) -> float:
 def tpr_at_fpr(labels: list[int], scores: list[float], target_fpr: float = 0.05) -> float:
     """TPR at a given FPR threshold, interpolated from the ROC curve."""
     from sklearn.metrics import roc_curve
+
     y = np.array(labels)
     s = np.array(scores)
     if len(set(y)) < 2:

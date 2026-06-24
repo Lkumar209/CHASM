@@ -34,7 +34,9 @@ def test_all_conditions_present() -> None:
 
 
 def test_make_induction_configs_count() -> None:
-    configs = make_induction_configs(conditions=["aligned", "naive_divergent"], eval_aware_variants=True)
+    configs = make_induction_configs(
+        conditions=["aligned", "naive_divergent"], eval_aware_variants=True
+    )
     assert len(configs) == 4  # 2 conditions x 2 (aware/unaware)
 
 
